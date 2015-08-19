@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node index.js",
-    "test": "mocha app --recursive"
+    "test": "mocha index --recursive"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,8 @@
     "express": "^4.13.3",
     "jade": "^1.11.0",
     "mongodb": "^2.0.41",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "nodemailer": "^1.4.0"
   },
   "devDependencies": {
     "chai": "^3.2.0",
