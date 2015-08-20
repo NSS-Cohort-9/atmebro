@@ -19,6 +19,7 @@ app.use(sassCSS({
   src: 'www/stylesheets',
   dest: 'www/stylesheets',
   debug: true,
+  force: true,
   outputStyle: 'compressed',
   prefix: '/styles'
 }));
