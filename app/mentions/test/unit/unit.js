@@ -55,9 +55,9 @@ describe('find username', function () {
   });
 
   it('should return post object', function (done) {
-    db.collection("user").findOne({text: "hola"}, function (err, res) {
-      console.log(err);
+    db.collection("user").findOne({username: "buddy"}, function (err, res) {
       res.username.should.equal("buddy");
+      console.log(res.username);
       done();
     });
   });
