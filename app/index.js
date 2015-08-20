@@ -6,6 +6,7 @@ var morgan = require('morgan');
 
 var routes = require('./routes');
 var database = require('../lib/mongo/');
+var bodyParser = require('body-parser');
 
 var app = module.exports = express();
 
@@ -14,10 +15,11 @@ app.set('views', __dirname);
 app.set('view engine', 'jade');
 
 app.locals.title = 'MiniTwit';
-
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
 app.use('/', routes);
+app.use(express.static('www'))
 
 require('../lib/errorHandler/');
 
