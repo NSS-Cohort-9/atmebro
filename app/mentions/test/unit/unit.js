@@ -26,6 +26,14 @@ describe('Find posts from database', function () {
     mongo.connect(done);
   });
 
+  var postObj = {
+      text: 'hola',
+      mention: 'LDougher',
+      username: 'buddy',
+      date: 'Thu Aug 22 2015 14:34:20 GMT-0500 (CDT)',
+      geolocation: 'nashville',
+    };
+
   describe('find username from posts collection', function () {
     
     var postObj = {
