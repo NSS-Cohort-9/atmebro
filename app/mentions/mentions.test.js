@@ -1,8 +1,8 @@
 'use strict';
 
 var expect 		= require('chai').expect;
-
-var Mentions 	= require('./mentions');
+var should 		= require('chai').should();
+var Post 			= require('./mentions');
 var mongo 		= require('../../lib/mongo/');
 
 
@@ -20,31 +20,41 @@ describe('Mocha + Chai', function() {
 
 describe('Mentions', function () {
 	
+	var seededPosts;
+
 	before(function (done) {
 		mongo.connect(function () {
 
-			var postObj = [
+			var seedPosts = [
 				{text: 'hola'},
 				{mention: 'LDougher'},
 				{username: 'buddy'},
 				{date: 'Thu Aug 22 2015 14:34:20 GMT-0500 (CDT)'},
-				{geolocation: 'nashville'},
+				{geolocation: 'Nashville'},
 		];
 
 		Post.collection.insertMany(seedPosts, function (err, result) {
-			postObj = result.ops;
+			seededPosts = result.ops;
 			done();
-			})
+			});
 		});
+	});
+
 		after(function (done) {
 			Post.dropCollection(done);
 		});
 
-	});
+	
 
-	// describe('should return post by mention', function (done) {
-		
-	// })
+	it('should return post by mention', function (done) {
+			var id1 = seededPosts[9]._id;
+			
+
+			Post.findById(id, function (err, post) {
+				expect(post).to.equal('LDougher');
+				done();
+			})
+	})
 
 
 

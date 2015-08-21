@@ -4,21 +4,24 @@ var express = require('express');
 // var router  = require('router');
 //var path    = require('path');
 
+
 var _ 			= require('lodash');
 
-function Mentions(m) {
-	this.username = m.username;
+
+function Post(p) {
+	this.username = p.username;
 }
 
-Object.defineProperty(Mentions, 'collection', {
+Object.defineProperty(Post, 'collection', {
 	get: function () {
 		return mongo.getDb().collection('posts');
 	}
 });
 
-Mentions.findById = function (cb) {
+Post.findById = function (cb) {
 	Post.collection.findOne({_id: ObjectID(id)}, function (err, post) {
 		cb(err, setPrototype(post));
+
 	});
 };
 
@@ -34,4 +37,4 @@ Mentions.findById = function (cb) {
 
 // module.exports = postObj;
 
-module.exports 		= Mentions;
+module.exports 		= Post;
