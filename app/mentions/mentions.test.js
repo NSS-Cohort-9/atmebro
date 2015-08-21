@@ -19,7 +19,7 @@ describe('Mocha + Chai', function() {
 // Mentions Tests
 
 describe('Mentions', function () {
-	
+
 	var seededPosts;
 
 	before(function (done) {
@@ -33,38 +33,26 @@ describe('Mentions', function () {
 				{geolocation: 'Nashville'},
 		];
 
-		Post.collection.insertMany(seedPosts, function (err, result) {
-			seededPosts = result.ops;
-			done();
+  		Post.collection.insertMany(seedPosts, function (err, result) {
+  			seededPosts = result.ops;
+  			done();
 			});
 		});
 	});
 
-		after(function (done) {
-			Post.dropCollection(done);
-		});
+	after(function (done) {
+		Post.dropCollection(done);
+	});
 
-	
 
 	it('should return post by mention', function (done) {
-			var id1 = seededPosts[9]._id;
-			
+			var id1 = seededPosts[1]._id;
 
-			Post.findById(id, function (err, post) {
-				expect(post).to.equal('LDougher');
+
+			Post.findById(id1, function (err, post) {
+				expect(post.mention).to.equal('LDougher');
 				done();
 			})
 	})
 
-
-
-
-
-
-
-
-
-
-
-
-})
+});

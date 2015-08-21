@@ -1,9 +1,10 @@
 'use strict';
 
 var express = require('express');
-// var router  = require('router');
+//var router  = require('router');
 //var path    = require('path');
-
+var mongo     = require('../../lib/mongo/');
+var ObjectID = require('mongodb').ObjectID;
 
 var _ 			= require('lodash');
 
@@ -18,7 +19,11 @@ Object.defineProperty(Post, 'collection', {
 	}
 });
 
-Post.findById = function (cb) {
+Post.dropCollection = function (cb) {
+  Post.collection.drop(cb);
+};
+
+Post.findById = function (id, cb) {
 	Post.collection.findOne({_id: ObjectID(id)}, function (err, post) {
 		cb(err, setPrototype(post));
 
@@ -38,3 +43,7 @@ Post.findById = function (cb) {
 // module.exports = postObj;
 
 module.exports 		= Post;
+
+function setPrototype(pojo) {
+  return _.create(Post.prototype, pojo);
+}
