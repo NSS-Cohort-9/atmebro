@@ -5,6 +5,13 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var morgan = require('morgan');
 var sass = require('node-sass-middleware');
+var mongoose = require('mongoose');
+var passport = require('passport'); // for Passport
+
+var cookieParser = require('cookie-parser');
+var session      = require('express-session');
+
+var configDB = require('./user/config/database.js');// for Passport
 
 var routes = require('./routes');
 var database = require('../lib/mongo/');
@@ -18,8 +25,11 @@ if (app.get('env') === 'test') {
   app.set('port', process.env.PORT || 3000);
 }
 
+require('./config/passport')(passport); // pass passport for configuration
+
 app.set('views', __dirname);
 app.set('view engine', 'jade');
+app.set('view engine', 'ejs'); // set up ejs for templating
 
 app.locals.title = 'MiniTwit';
 
@@ -33,6 +43,11 @@ app.use(sass({
   sourceMap: app.get('env') === 'production' ? 'false' : true,
   src: 'www/styles'
 }));
+
+// required for passport
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 
 app.use('/', routes);
 
