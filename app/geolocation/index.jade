@@ -1,9 +1,14 @@
 extends ../templates/layout
 
 // form will become part of the tweet message form
+
+link(rel="stylesheet", href="css/geostyle.css")
 block content
+  div#map-canvas
   form(action='/geolocation/submit', method="POST")
     input(name="lat" id="lat")
     input(name="long" id="lng")
     input(type="submit" value="submit")
+  script(src="//code.jquery.com/jquery-1.11.0.min.js")
+  script(src='https://maps.googleapis.com/maps/api/js?v=3.exp')
   script(src="clientgeo.js")
