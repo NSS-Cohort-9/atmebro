@@ -1,4 +1,6 @@
-var should = require("chai").should();
+'use strict';
+
+var should = require('chai').should();
 var express = require('express');
 var app = express();
 var Post = require('../../../post/Post.js');
@@ -27,11 +29,11 @@ describe('Find posts from database', function () {
   describe('find username from posts collection', function () {
     
     var postObj = {
-      text: "hola",
-      mention: "LDougher",
-      username: "buddy",
-      date: "Thu Aug 22 2015 14:34:20 GMT-0500 (CDT)",
-      geolocation: "nashville",
+      text: 'hola',
+      mention: 'LDougher',
+      username: 'buddy',
+      date: 'Thu Aug 22 2015 14:34:20 GMT-0500 (CDT)',
+      geolocation: 'nashville',
     };
 
     var db;
@@ -39,21 +41,21 @@ describe('Find posts from database', function () {
 
     beforeEach(function (done) {
       db = mongo.getDb();
-      db.collection("posts").insert(postObj, function () {
+      db.collection('posts').insert(postObj, function () {
         done();
       });
     });
 
     it('should return post object', function (done) {
-      db.collection("posts").findOne({username: "buddy"}, function (err, res) {
-        res.username.should.equal("buddy");
+      db.collection('posts').findOne({username: 'buddy'}, function (err, res) {
+        res.username.should.equal('buddy');
         console.log(res.username);
         done();
       });
     });
 
     after(function(done){
-      db.collection("posts").remove({}, function () {
+      db.collection('posts').remove({}, function () {
         done();
       });
     });
