@@ -16,7 +16,11 @@ Object.defineProperty(Mentions, 'collection', {
 	}
 });
 
-
+Mentions.findById = function (cb) {
+	Post.collection.findOne({_id: ObjectID(id)}, function (err, post) {
+		cb(err, setPrototype(post));
+	});
+};
 
 
 // var postObj = {

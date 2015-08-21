@@ -15,8 +15,38 @@ describe('Mocha + Chai', function() {
   });
 });
 
+
+// Mentions Tests
+
 describe('Mentions', function () {
-	var seededPosts;
+	
+	before(function (done) {
+		mongo.connect(function () {
+
+			var postObj = [
+				{text: 'hola'},
+				{mention: 'LDougher'},
+				{username: 'buddy'},
+				{date: 'Thu Aug 22 2015 14:34:20 GMT-0500 (CDT)'},
+				{geolocation: 'nashville'},
+		];
+
+		Post.collection.insertMany(seedPosts, function (err, result) {
+			postObj = result.ops;
+			done();
+			})
+		});
+		after(function (done) {
+			Post.dropCollection(done);
+		});
+
+	});
+
+	// describe('should return post by mention', function (done) {
+		
+	// })
+
+
 
 
 
