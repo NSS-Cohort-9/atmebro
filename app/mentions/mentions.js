@@ -30,18 +30,6 @@ Post.findById = function (id, cb) {
 	});
 };
 
-
-// var postObj = {
-//   text: 'hola',
-//   mention: 'LDougher',
-//   username: 'buddy',
-//   date: 'Thu Aug 20 2015 14:34:20 GMT-0500 (CDT)',
-//   geolocation: 'nashville',
-//   hidden: false
-// };
-
-// module.exports = postObj;
-
 module.exports 		= Post;
 
 function setPrototype(pojo) {
