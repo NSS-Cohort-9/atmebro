@@ -3,9 +3,13 @@ extends ../templates/layout
 block content
   form(action='/post', method='POST')
     input(name='text')
+    input(name="lat" id="lat" type="hidden")
+    input(name="long" id="lng" type="hidden")
     input(type='submit')
 
   ul
     each post in posts
       li
         a(href='/post/' + post._id)= post.text
+        p= post.address
+  script(src="clientgeo.js")

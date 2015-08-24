@@ -9,5 +9,4 @@ var post = require('./post/routes');
 router.use('/', home);
 router.use('/', post);
 
->>>>>>> upstream/master
 module.exports = router;
