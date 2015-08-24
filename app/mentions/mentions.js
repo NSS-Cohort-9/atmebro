@@ -17,7 +17,7 @@ var transporter = nodemailer.createTransport({
 });
 
 var mailOptions = {
-  from    :'sender@address',
+  from    :'test.nodemailer@gmail.com',
   to      :'NodemailerTEST@gmail.com',
   subject : 'hello',
   text    : 'hello world!'
