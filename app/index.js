@@ -5,14 +5,13 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var morgan = require('morgan');
 var sass = require('node-sass-middleware');
-var passport = require('passport'); // for Passport
-
 var session      = require('express-session');
 
 // var configDB = require('./user/config/database.js');// for Passport
 
 var routes = require('./routes');
 var database = require('../lib/mongo/');
+global.passport = require('passport');
 
 var app = module.exports = express();
 
@@ -23,11 +22,11 @@ if (app.get('env') === 'test') {
   app.set('port', process.env.PORT || 3000);
 }
 
-require('./user/config/passport')(passport); // pass passport for configuration
+require('./user/config/passport'); // pass passport for configuration
 
 app.set('views', __dirname);
 app.set('view engine', 'jade');
-app.set('view engine', 'ejs'); // set up ejs for templating
+// app.set('view engine', 'ejs'); // set up ejs for templating
 
 app.locals.title = 'MiniTwit';
 
@@ -44,8 +43,8 @@ app.use(sass({
 
 // required for passport
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
+app.use(global.passport.initialize());
+app.use(global.passport.session()); // persistent login sessions
 
 app.use('/', routes);
 

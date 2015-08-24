@@ -1,84 +1,25 @@
 'use strict';
 
-// var passport = require('passport'); // for Passport
+var express = require('express');
+var router = express.Router();
 
-module.exports = function (app, passport) {
+var ctrl = require('./controller');
 
-// normal routes ===============================================================
+router.get('/profile', isLoggedIn, ctrl.show);
+router.get('/logout', ctrl.logout);
 
-    // show the home page (will also have Twitter link)
-    app.get('/', function (req, res) {
-        res.render('index.ejs');
-      });
+router.get('/auth/twitter', ctrl.authTwitter)
+router.get('/auth/twitter/callback', ctrl.authTwitterCb)
+router.get('/connect/twitter', ctrl.connectTwitter)
+router.get('/connect/twitter/callback', ctrl.connectTwitterCb)
+router.get('/unlink/twitter', isLoggedIn, ctrl.unlinkTwitter)
 
-    // PROFILE SECTION =========================
-    app.get('/profile', isLoggedIn, function (req, res) {
-        res.render('profile.ejs', {
-          user : req.user
-        });
-      });
+module.exports = router;
 
-    // LOGOUT ==============================
-    app.get('/logout', function (req, res) {
-        req.logout();
-        res.redirect('/');
-      });
-
-// =============================================================================
-// AUTHENTICATE (FIRST LOGIN) ==================================================
-// =============================================================================
-
-    // twitter --------------------------------
-
-        // send to twitter to do the authentication
-    app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
-
-        // handle the callback after twitter has authenticated the user
-    app.get('/auth/twitter/callback',
-            passport.authenticate('twitter', {
-              successRedirect : '/profile',
-              failureRedirect : '/'
-            }));
-
-
-// =============================================================================
-// AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
-// =============================================================================
-
-    // twitter --------------------------------
-
-        // send to twitter to do the authentication
-    app.get('/connect/twitter', passport.authorize('twitter', { scope : 'email' }));
-
-        // handle the callback after twitter has authorized the user
-    app.get('/connect/twitter/callback',
-            passport.authorize('twitter', {
-              successRedirect : '/profile',
-              failureRedirect : '/'
-            }));
-
-// =============================================================================
-// UNLINK ACCOUNTS =============================================================
-// =============================================================================
-// used to unlink accounts. for social accounts, just remove the token
-// for local account, remove email and password
-// user account will stay active in case they want to reconnect in the future
-
-    // twitter --------------------------------
-    app.get('/unlink/twitter', isLoggedIn, function (req, res) {
-        var user           = req.user;
-        user.twitter.token = undefined;
-        user.save(function () {
-            res.redirect('/profile');
-          });
-      });
-
-  };
-
-// route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated())
+  if (req.isAuthenticated()) {
     return next();
+  }
 
   res.redirect('/');
 }
