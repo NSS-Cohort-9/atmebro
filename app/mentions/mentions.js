@@ -46,7 +46,7 @@ Post.findById = function (id, cb) {
 	});
 };
 
-///////////////////// NODEMAILER FUNCTIONS ///////////////////////
+///////////////////// NODEMAILER FUNCTIONS ////////////////////////
 
 transporter.sendMail(mailOptions, function(err, info) {
   if(err) {
