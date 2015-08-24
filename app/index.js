@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var morgan = require('morgan');
 var sass = require('node-sass-middleware');
-
 var routes = require('./routes');
 var database = require('../lib/mongo/');
 
@@ -33,6 +32,7 @@ app.use(sass({
   sourceMap: app.get('env') === 'production' ? 'false' : true,
   src: 'www/styles'
 }));
+
 
 app.use('/', routes);
 
