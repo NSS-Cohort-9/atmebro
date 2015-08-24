@@ -5,13 +5,11 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var morgan = require('morgan');
 var sass = require('node-sass-middleware');
-var mongoose = require('mongoose');
 var passport = require('passport'); // for Passport
 
-var cookieParser = require('cookie-parser');
 var session      = require('express-session');
 
-var configDB = require('./user/config/database.js');// for Passport
+// var configDB = require('./user/config/database.js');// for Passport
 
 var routes = require('./routes');
 var database = require('../lib/mongo/');
@@ -25,7 +23,7 @@ if (app.get('env') === 'test') {
   app.set('port', process.env.PORT || 3000);
 }
 
-require('./config/passport')(passport); // pass passport for configuration
+require('./user/config/passport')(passport); // pass passport for configuration
 
 app.set('views', __dirname);
 app.set('view engine', 'jade');
