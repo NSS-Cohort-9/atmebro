@@ -3,6 +3,6 @@
 var express = require('express');
 var router = express.Router();
 
-var nodemailerJS = require('./nodemailer');
+var mentions = require('./mentions');
 
 module.exports = router;

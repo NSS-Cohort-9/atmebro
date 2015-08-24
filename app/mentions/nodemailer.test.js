@@ -3,7 +3,8 @@
 var nodemailer = require('nodemailer');
 var expect    = require('chai').expect;
 var should    = require('chai').should();
-var nodemailerJS = require('./nodemailer');
+var mention = require('./mentions')
+var sinon = require('sinon');
 
 describe('nodemailer unit tests', function () {
   var nm, transport;
@@ -22,10 +23,17 @@ describe('nodemailer unit tests', function () {
     expect(nm).to.exist;
   });
 
-  it('should create mailOptions object', function (done) {
+  it('should process sendMail', function(done) {
+    sinon.stub(transport, 'send').yields(null, 'test message');
 
-    expect(mailOptions.subject).to.equal('hello');
-    done();
+    nm.sendMail({
+        subject: 'test'
+    }, function(err, info) {
+        expect(transport.send.callCount).to.equal(1);
+        expect(info).to.equal('test message');
+        transport.send.restore();
+        done();
+    });
   });
 
 });
