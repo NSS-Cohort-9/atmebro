@@ -11,12 +11,10 @@ module.exports.logout = function (req, res) {
 };
 
 module.exports.authTwitter = function () {
-  console.log('authTwitter');
   global.passport.authenticate('twitter', { scope : 'email' });
 };
 
 module.exports.authTwitterCb = function () {
-  console.log('authTwitterCb');
   global.passport.authenticate('twitter', {
     successRedirect : '/profile',
     failureRedirect : '/'

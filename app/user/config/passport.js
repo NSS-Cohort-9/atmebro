@@ -11,8 +11,6 @@ var configAuth = require('./auth'); // use this one for testing
 
 var passport = global.passport;
 
-  console.log('passport import')
-
     // =========================================================================
     // passport session setup ==================================================
     // =========================================================================
@@ -21,13 +19,11 @@ var passport = global.passport;
 
     // used to serialize the user for the session
 passport.serializeUser(function (user, done) {
-  console.log('serializeUser');
         done(null, user.id);
       });
 
     // used to deserialize the user
 passport.deserializeUser(function (id, done) {
-  console.log('deserializeUser');
         User.findById(id, function (err, user) {
             done(err, user);
           });
@@ -46,10 +42,8 @@ passport.use(new TwitterStrategy({
 
 },
     function (req, token, tokenSecret, profile, done) {
-      console.log('use')
         // asynchronous
         process.nextTick(function () {
-          console.log('use2')
             // check if the user is already logged in
             if (!req.user) {
 
