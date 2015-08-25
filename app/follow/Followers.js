@@ -23,6 +23,11 @@ Followers.create = function (followers, cb) {
   Followers.collection.insertOne(followers, cb);
 };
 
+
+Followers.create = function(id, cb) {
+  Followers.collection.findOne({_id: id})
+}
+
 Followers.dropCollection = function (cb) {
   Followers.collection.drop(cb);
 };

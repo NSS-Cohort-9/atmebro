@@ -131,17 +131,17 @@ describe('Followers', function () {
     });
   });
 
-  // // describe('.create()', function () {
-  // //   it('should add a post to the database', function (done) {
-  // //     Post.count(function (err, initialCount) {
-  // //       expect(initialCount).to.equal(2);
-  // //       Post.create({}, function () {
-  // //         Post.count(function (err, newCount) {
-  // //           expect(newCount).to.equal(3);
-  // //           done();
-  // //         });
-  // //       });
-  // //     });
-  // //   });
-  // // });
+  describe('.create()', function () {
+    it('should add a post to the database', function (done) {
+      Post.count(function (err, initialCount) {
+        expect(initialCount).to.equal(2);
+        Post.create({}, function () {
+          Post.count(function (err, newCount) {
+            expect(newCount).to.equal(3);
+            done();
+          });
+        });
+      });
+    });
+  });
 });
