@@ -1,6 +1,5 @@
 'use strict';
 
-var ObjectID = require('mongodb').ObjectID;
 var _ = require('lodash');
 
 var mongo = require('../../lib/mongo/');
@@ -14,14 +13,6 @@ Object.defineProperty(Following, 'collection', {
     return mongo.getDb().collection('following');
   }
 });
-
-Following.count = function (cb) {
-  return Following.collection.count(cb);
-};
-
-Following.create = function (following, cb) {
-  Following.collection.insertOne(following, cb);
-};
 
 Following.dropCollection = function (cb) {
   Following.collection.drop(cb);
@@ -42,6 +33,22 @@ Following.findAll = function (cb) {
     cb(err, prototypedFollowings);
   });
 };
+
+Following.follow = function(id1, id2, cb) {
+
+    Following.collection.findOneAndUpdate(
+    { ownerId: id1 }, 
+    { $addToSet: { followingWho: [id2] } },
+    { 
+      upsert: true,
+      returnOriginal: false
+    }, function(err, result) {
+        cb(err, result.value)
+      }
+  )
+};
+
+
 
 module.exports = Following;
 

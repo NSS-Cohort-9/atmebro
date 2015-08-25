@@ -1,0 +1,9 @@
+extends ../templates/layout
+
+
+ul each follower in followers
+	li
+		a(href='/follow/' + follower.ownerId)= follower.name 
+			p follow
+
+

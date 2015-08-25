@@ -23,7 +23,8 @@ describe('Followers', function () {
       });
 
       seededFollowers = [
-        {ownerId: seededUsers[0]._id, followedBy: [seededUsers[1]._id]}
+        {ownerId: seededUsers[0]._id, followedBy: [seededUsers[1]._id]},
+        {ownerId: seededUsers[1]._id, followedBy: [seededUsers[0]._id]}
       ];
 
       Followers.collection.insert(seededFollowers, function (err, result) {
@@ -32,7 +33,8 @@ describe('Followers', function () {
       });
 
       seededFollowing = [
-        {ownerId: seededUsers[1]._id, followingWho: [seededUsers[0]._id]}
+        {ownerId: seededUsers[1]._id, followingWho: [seededUsers[0]._id]},
+        {ownerId: seededUsers[0]._id, followingWho: [[seededUsers[1]._id]]}
       ];
 
       Following.collection.insert(seededFollowing, function (err, result) {
@@ -49,17 +51,6 @@ describe('Followers', function () {
     done();
   });
 
- describe('findUserCollection', function () {
-    it('should return a User object', function (done) {
-      var userId = seededUsers[0]._id
-
-      User.findById(userId, function (err, user) {
-        expect(user).to.be.an.instanceOf(User)
-          done();
-
-      });
-    });
-  });
 
   describe('find Followers And Following By UserId', function () {
     it('should return a Followers _id', function (done) {
@@ -82,19 +73,6 @@ describe('Followers', function () {
       });
     });
 
-    it('should return the users name', function (done) {
-      var id1 = seededUsers[0]._id;
-      var id2 = seededUsers[1]._id;
-
-      User.findById(id1, function (err, user) {
-        expect(user.name).to.equal('Simone');
-
-        User.findById(id2, function (err, user) {
-          expect(user.name).to.equal('Matt');
-          done();
-        });
-      });
-    });
   });
 
   describe('find Followers and Following', function () {
@@ -132,16 +110,30 @@ describe('Followers', function () {
   });
 
   describe('.create()', function () {
-    it('should add a post to the database', function (done) {
-      Post.count(function (err, initialCount) {
-        expect(initialCount).to.equal(2);
-        Post.create({}, function () {
-          Post.count(function (err, newCount) {
-            expect(newCount).to.equal(3);
-            done();
-          });
-        });
-      });
+    this.timeout(5000);
+    it('should add a follower to the respective followers document', function (done) {
+      var id1 = seededUsers[0]._id; // Simone
+      var id2 = seededUsers[1]._id; // Matt
+      var fErs = seededFollowers[1].followedBy; // Matt
+      var fIng = seededFollowing[1].followingWho; // Simone
+
+      Following.follow(id1, id2, function(err, result) {
+        expect(fIng.toString()).to.equal(result.followingWho.toString())
+        done();
+      })
     });
+    
+    it('should add followed Id to the respective followed document', function (done) {
+      var id1 = seededUsers[0]._id; // Simone
+      var id2 = seededUsers[1]._id; // Matt
+      var fErs = seededFollowers[1].followedBy; // Matt
+      var fIng = seededFollowing[1].followingWho; // Simone
+
+      Followers.follow(id1, id2, function(err, result) {
+        expect(fErs.toString()).to.equal(result.followedBy.toString())
+        done();
+      })
+    });
+
   });
 });

@@ -1,6 +1,5 @@
 'use strict';
 
-var ObjectID = require('mongodb').ObjectID;
 var _ = require('lodash');
 
 var mongo = require('../../lib/mongo/');
@@ -15,21 +14,34 @@ Object.defineProperty(Followers, 'collection', {
   }
 });
 
-Followers.count = function (cb) {
-  return Followers.collection.count(cb);
-};
+// Followers.count = function (cb) {
+//   return Followers.collection.count(cb);
+// };
 
-Followers.create = function (followers, cb) {
-  Followers.collection.insertOne(followers, cb);
-};
+// Followers.create = function (followers, cb) {
+//   Followers.collection.insertOne(followers, cb);
+// };
 
 
-Followers.create = function(id, cb) {
-  Followers.collection.findOne({_id: id})
-}
+// Followers.create = function(id, cb) {
+//   Followers.collection.findOne ({_id: id})
+// };
 
 Followers.dropCollection = function (cb) {
   Followers.collection.drop(cb);
+};
+
+Followers.follow = function (id1, id2, cb) {
+  Followers.collection.findOneAndUpdate(
+      {ownerId: id2}, 
+      {$addToSet: {followedBy: id1}},
+      { 
+        upsert: true,
+        returnOriginal: false
+      }, function(err, result) {
+          cb(err, result.value);
+        }
+    )
 };
 
 Followers.findById = function (id, cb) {

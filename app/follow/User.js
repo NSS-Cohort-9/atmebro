@@ -15,13 +15,6 @@ Object.defineProperty(User, 'collection', {
   }
 });
 
-User.count = function (cb) {
-  return User.collection.count(cb);
-};
-
-User.create = function (user, cb) {
-  User.collection.insertOne(user, cb);
-};
 
 User.dropCollection = function (cb) {
   User.collection.drop(cb);
