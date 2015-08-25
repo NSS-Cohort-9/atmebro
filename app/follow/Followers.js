@@ -24,8 +24,8 @@ Followers.dropCollection = function (cb) {
 
 Followers.follow = function (id1, id2, cb) {
   Followers.collection.findOneAndUpdate(
-      {ownerId: id2}, 
-      {$addToSet: {followedBy: id1}},
+      {ownerId: id1}, 
+      {$addToSet: {followedBy: id2}},
       { 
         upsert: true,
         returnOriginal: false
