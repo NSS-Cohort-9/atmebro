@@ -1,0 +1,40 @@
+body {
+  background-color: rgb(74, 155, 230);
+}
+
+h1 {
+  color: orange;
+}
+
+
+/*---------------------|
+|    start             |
+|    MAP AND INFOBOX   |
+----------------------*/
+
+#map-canvas {
+  height: 450px;
+  width: 450px;
+   }
+#iw-container .iw-title {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 22px;
+  padding:10px;
+  color:#48b5e9;
+  margin:1px;
+  border-radius: 2px 2px 0 0;
+}
+.gm-style-iw {
+  width:350px !important;
+  top: 0 !important;
+  left: 0 !important;
+  background-color: #ffffff;
+  box-shadow: 0 1px 6px rbga(178, 178, 178, 0.6);
+  border: 1px solid rgba(72, 178, 178, 0.6);
+  border-radius: 2px 2px 0 0;
+}
+
+/*---------------------|
+|    end               |
+|    MAP AND INFOBOX   |
+----------------------*/
