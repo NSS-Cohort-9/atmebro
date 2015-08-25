@@ -7,10 +7,9 @@ var User = require('./User')
 module.exports.userIndex = function (req, res) {
   User.findAll(function (err, users) {
     if (err) { throw err; }
-    res.render('user/index', {users: users});
+    res.render('follow/index', {users: users});
   });
 };
-
 
 module.exports.getFollowers = function (req, res) {
   Followers.findAll(function (err, followers) {
