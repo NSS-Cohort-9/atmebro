@@ -18,15 +18,6 @@ Object.defineProperty(Followers, 'collection', {
 //   return Followers.collection.count(cb);
 // };
 
-// Followers.create = function (followers, cb) {
-//   Followers.collection.insertOne(followers, cb);
-// };
-
-
-// Followers.create = function(id, cb) {
-//   Followers.collection.findOne ({_id: id})
-// };
-
 Followers.dropCollection = function (cb) {
   Followers.collection.drop(cb);
 };
@@ -55,7 +46,7 @@ Followers.findAll = function (cb) {
     var prototypedFollowers = followers.map(function (follower) {
       return setPrototype(follower);
     });
-
+    console.log(prototypedFollowers)
     cb(err, prototypedFollowers);
   });
 };

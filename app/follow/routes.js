@@ -8,6 +8,7 @@ var ctrl = require('./follow.controller');
 
 // get all users
 router.get('/', ctrl.userIndex)
+
 // get all followers of a user 
 router.get('/followers', ctrl.getFollowers)
 

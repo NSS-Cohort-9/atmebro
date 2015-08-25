@@ -19,7 +19,7 @@ module.exports.getFollowers = function (req, res) {
 };
 
 module.exports.follow = function (req, res) {
-  Followers.follow(req.params.id, req.session.id, function (err, followers) {
+  Followers.follow(req.params.id, req.session.id, function (err) {
     Following.follow(req.session.id, req.params.id, function (err, following) {
       res.render('follow/profile', {following: following})
     })
