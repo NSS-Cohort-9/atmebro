@@ -9,3 +9,7 @@ script:
 services:
   - mongodb
 ...
+
+deploy:
+  provider: heroku
+  api_key: $AUTH_TOKEN
