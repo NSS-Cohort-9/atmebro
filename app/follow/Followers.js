@@ -36,9 +36,19 @@ Followers.follow = function (id1, id2, cb) {
 };
 
 Followers.findById = function (id, cb) {
-  Followers.collection.findOne({_id: id}, function (err, followers) {
+  Followers.collection.findOne({ownerId: id}, function (err, followers) {
     cb(err, setPrototype(followers));
   });
+};
+
+Followers.unfollowUser = function (id1, id2, cb) {
+    Followers.collection.findOneAndDelete(
+      {followedBy: id2}, 
+      {projection: {ownerId: id1}},
+      function(err, result) {
+        cb(err, result);
+      }
+    )
 };
 
 Followers.findAll = function (cb) {
@@ -46,7 +56,6 @@ Followers.findAll = function (cb) {
     var prototypedFollowers = followers.map(function (follower) {
       return setPrototype(follower);
     });
-    console.log(prototypedFollowers)
     cb(err, prototypedFollowers);
   });
 };

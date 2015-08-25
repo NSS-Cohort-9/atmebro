@@ -4,18 +4,10 @@ var Followers = require('./Followers');
 var Following = require('./Following');
 var User = require('./User')
 
-module.exports.userIndex = function (req, res) {
-  User.findAll(function (err, users) {
-    if (err) { throw err; }
-    res.render('follow/index', {users: users});
-  });
-};
-
-module.exports.getFollowers = function (req, res) {
-  Followers.findAll(function (err, followers) {
-    if (err) { throw err; }
-    res.render('follow/index', {followers: followers});
-  });
+module.exports.getFollowers = function (req, res) { // NEED TO IMPLEMENT ON THE USER PROFILE TEMPLATE SIDE
+  Followers.findById(req.params.id, function(err, followers) {
+    res.render('user/profile', {followers: followers})
+  })
 };
 
 module.exports.follow = function (req, res) {

@@ -5,18 +5,16 @@ var router = express.Router();
 
 var ctrl = require('./follow.controller');
 
-
-// get all users
-router.get('/', ctrl.userIndex)
-
-// get all followers of a user 
+// find all followers of a user by user_.id
 router.get('/followers', ctrl.getFollowers)
 
+// find out who users are following
+
 // go to an individual user
-router.get('/users/:id', ctrl.userPage)
+
 
 // get all users i'm following
-router.get('/profile/', ctrl.follow)
+
 
 // follow a user
 router.get('/follow/:id', ctrl.follow)

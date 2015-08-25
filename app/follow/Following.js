@@ -19,20 +19,11 @@ Following.dropCollection = function (cb) {
 };
 
 Following.findById = function (id, cb) {
-  Following.collection.findOne({_id: id}, function (err, following) {
+  Following.collection.findOne({ownerId: id}, function (err, following) {
     cb(err, setPrototype(following));
   });
 };
 
-Following.findAll = function (cb) {
-  Following.collection.find().toArray(function (err, followings) {
-    var prototypedFollowings = followings.map(function (following) {
-      return setPrototype(following);
-    });
-
-    cb(err, prototypedFollowings);
-  });
-};
 
 Following.follow = function(id1, id2, cb) {
 
@@ -46,6 +37,16 @@ Following.follow = function(id1, id2, cb) {
         cb(err, result.value)
       }
   )
+};
+
+Following.unfollowUser = function (id1, id2, cb) {
+    Following.collection.findOneAndDelete(
+      {followingWho: id2}, 
+      {projection: {ownerId: id1}},
+      function(err, result) {
+        cb(err, result);
+      }
+    )
 };
 
 

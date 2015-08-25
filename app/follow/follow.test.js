@@ -51,67 +51,9 @@ describe('Followers', function () {
     done();
   });
 
-
-  describe('find Followers And Following By UserId', function () {
-    it('should return a Followers _id', function (done) {
-      var id = seededUsers[0]._id;
-      var fErs = seededFollowers[0].ownerId
-
-      User.findById(id, function (err, user) {
-        expect(user._id).to.equal(fErs);
-          done();
-      });
-    });
-    
-    it('should return a Following _id', function (done) {
-      var id = seededUsers[1]._id;
-      var fIng = seededFollowing[0].ownerId
-
-      User.findById(id, function (err, user) {
-        expect(user._id).to.equal(fIng);
-          done();
-      });
-    });
-
-  });
-
-  describe('find Followers and Following', function () {
-    it('should return all follower objects', function (done) {
-      Followers.findAll(function (err, follower) {
-        follower.forEach(function (ids) {
-          expect(ids).to.be.an.instanceOf(Followers);
-        });
-        done();
-      });
-    });
-
-    it('should return all following objects', function (done) {
-      Following.findAll(function (err, following) {
-        following.forEach(function (ids) {
-          expect(ids).to.be.an.instanceOf(Following);
-        });
-        done();
-      });
-    });
-
-    it('should return all followers', function (done) {
-      Followers.findAll(function (err, follower) {
-        expect(follower).to.deep.equal(seededFollowers);
-        done();
-      });
-    });
-
-    it('should return all following', function (done) {
-      Following.findAll(function (err, following) {
-        expect(following).to.deep.equal(seededFollowing);
-        done();
-      });
-    });
-  });
-
-  describe('.create()', function () {
+  describe('.follow()', function () {
     this.timeout(5000);
-    it('should add a follower to the respective followers document', function (done) {
+    it('should add a _id to the Following - followingWho document', function (done) {
       var id1 = seededUsers[0]._id; // Simone
       var id2 = seededUsers[1]._id; // Matt
       var fErs = seededFollowers[1].followedBy; // Matt
@@ -123,7 +65,7 @@ describe('Followers', function () {
       })
     });
     
-    it('should add followed Id to the respective followed document', function (done) {
+    it('should add a _id to the Followers - followedBy document', function (done) {
       var id1 = seededUsers[0]._id; // Simone
       var id2 = seededUsers[1]._id; // Matt
       var fErs = seededFollowers[1].followedBy; // Matt
@@ -134,6 +76,51 @@ describe('Followers', function () {
         done();
       })
     });
+  });
+
+
+  describe('find Followers and Following', function () {
+    it('should return all followers given a user._id', function (done) {
+      var id1 = seededUsers[0]._id; // Simone
+      var fErs = seededFollowers[0].followedBy; // Matt
+
+      Followers.findById(id1, function (err, followers) {
+        expect(followers.followedBy.toString()).to.include(fErs)
+        done();
+      })
+    });
+
+    it('should return all following given a user._id', function (done) {
+      var id1 = seededUsers[1]._id; // Simone
+      var fIng = seededFollowing[0].followingWho; // Matt
+
+      Following.findById(id1, function (err, following) {
+        expect(following.followingWho.toString()).to.include(fIng)
+        done();
+      })
+    });
+
+    it('should unfollow a user given an _id', function (done) {
+      var id1 = seededUsers[0]._id; // Simone
+      var id2 = seededUsers[1]._id; // Matt
+
+      Followers.unfollowUser(id1, id2, function (err, result) {
+        expect(result).to.not.have.property('followedBy')
+        done();
+      })
+    });
+
+    it('should remove a user from Following given an _id', function (done) {
+      var id1 = seededUsers[0]._id; // Simone
+      var id2 = seededUsers[1]._id; // Matt
+
+      Followers.unfollowUser(id1, id2, function (err, result) {
+        expect(result).to.not.have.property('followingWho')
+        done();
+      })
+    });
 
   });
+
+
 });
