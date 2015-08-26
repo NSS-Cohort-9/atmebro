@@ -1,8 +1,0 @@
-extends ../templates/layout
-
-
-ul each user in following
-	li
-		a(href='/users/' + user.ownerId)= follower.name 
-		a(href='/unfollow/' + user.ownerId) unfollow
-

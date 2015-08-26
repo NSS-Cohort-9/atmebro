@@ -3,20 +3,19 @@
 var express = require('express');
 var router = express.Router();
 
-var ctrl = require('./follow.controller');
+var ctrl = require('./controller');
 
-// find all followers of a user by user_.id
-router.get('/followers/:id', ctrl.getFollowers)
+// find all followers of a user 
+router.get('/:id/followers', ctrl.getFollowers)
+
+// find all users an individual is following
+router.get('/:id/following', ctrl.getFollowing)
 
 // follow a user
-router.get('/follow/:id', ctrl.follow)
+router.post('/:id/follow', ctrl.follow)
 
 // unfollow a user
-router.get('/unfollow/:id', ctrl.unfollow) 
-
-// find out who users are following
-router.get('/following/:id', ctrl.userFollowing)
-
+router.delete('/:id/follow', ctrl.unfollow) 
 
 
 module.exports = router;

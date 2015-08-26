@@ -4,64 +4,75 @@ var _ = require('lodash');
 
 var mongo = require('../../lib/mongo/');
 
-function Followers(p) {
-  this.text = p.text;
+function Followers(f) {
+  this._id = f.followingId;
 }
 
 Object.defineProperty(Followers, 'collection', {
-  get: function () {
+  get: function () { // the function returned will be used as the value of the property
     return mongo.getDb().collection('followers');
   }
 });
 
-// Followers.count = function (cb) {
-//   return Followers.collection.count(cb);
-// };
+Followers.findOrCreate = function (followingId, userId, cb) {
+  Follower.findOne({followingId: followingId}, function (err, userId) {
+    if (err) {
+      return cb(err);
+    }
+
+    if (userId) {
+      return cb(null, userId)
+    } else {
+      Follower.create(followingId, userId, cb);
+    }
+  })
+}
+
+
+Followers.create = function (followingId, userId, cb) {
+  Followers.collection.insertOne({'followingId': followingId, 'userId': userId}, function (err, result) {
+    cb(err, result);
+  })
+}
+
+Followers.destroy = function (followingId, userId, cb) {
+  Followers.collection.findAndRemove({followingId: followingId, userId: userId}, function (err, result) {
+    cb(err, result);
+  })
+}
+
+Followers.allFollowers = function (followingId, cb) {
+  Followers.collection.find({followingId: followingId}).toArray(function (err, result) {
+    var prototypeResult = result.map(function(followers) {
+      return setPrototype(followers)
+    });
+    cb(err, setPrototype(result));
+  });
+}
+
+Followers.allFollowing = function (userId, cb) {
+  Followers.collection.find({userId: userId}).toArray(function (err, result) {
+    var prototypeResult = result.map(function(following) {
+      return setPrototype(following)
+    });
+    cb(err, prototypeResult);
+  });
+}
+
+Followers.count = function (cb) {
+  return Followers.collection.count(cb);
+};
+
+
 
 Followers.dropCollection = function (cb) {
   Followers.collection.drop(cb);
 };
 
-Followers.follow = function (id1, id2, cb) {
-  Followers.collection.findOneAndUpdate(
-      {ownerId: id1}, 
-      {$addToSet: {followedBy: id2}},
-      { 
-        upsert: true,
-        returnOriginal: false
-      }, function(err, result) {
-          cb(err, result.value);
-        }
-    )
-};
-
-Followers.findById = function (id, cb) {
-  Followers.collection.findOne({ownerId: id}, function (err, followers) {
-    cb(err, setPrototype(followers));
-  });
-};
-
-Followers.unfollowUser = function (id1, id2, cb) {
-    Followers.collection.findOneAndDelete(
-      {followedBy: id2}, 
-      {projection: {ownerId: id1}},
-      function(err, result) {
-        cb(err, result);
-      }
-    )
-};
-
-Followers.findAll = function (cb) {
-  Followers.collection.find().toArray(function (err, followers) {
-    var prototypedFollowers = followers.map(function (follower) {
-      return setPrototype(follower);
-    });
-    cb(err, prototypedFollowers);
-  });
-};
 
 module.exports = Followers;
 
 function setPrototype(pojo) {
   return _.create(Followers.prototype, pojo);
 }
+
