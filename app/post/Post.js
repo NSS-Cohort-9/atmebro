@@ -50,6 +50,17 @@ Post.findAll = function (cb) {
   });
 };
 
+Post.sorter = function (cb) {
+  return arr.sort(function (a, b) {
+    return a.date - b.date;
+  }).reverse(cb);
+}
+
+Post.tenAtATime = function (cursor, i) {
+  cursor.find().sort({_id: -1}).limit(10).skip(i);
+}
+
+
 module.exports = Post;
 
 function setPrototype(pojo) {
