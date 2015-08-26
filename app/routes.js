@@ -5,7 +5,12 @@ var router = express.Router();
 
 var home = require('./home/routes');
 var post = require('./post/routes');
-var user = require('./user/routes');
+var user = require('./user/routes')
+
+router.use('/', home);
+router.use('/', post);
+router.use('/', user);
+
 
 router.use(function (req, res, next) {
   if (req.user) {
@@ -14,8 +19,6 @@ router.use(function (req, res, next) {
   next();
 });
 
-router.use('/', home);
-router.use('/', post);
-router.use('/', user);
+
 
 module.exports = router;
