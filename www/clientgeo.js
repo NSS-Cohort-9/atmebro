@@ -50,7 +50,7 @@ var contentString = '<div id="content">'+
       '(last visited June 22, 2009).</p>'+
       '</div>'+
       '</div>';
-;
+
 
   var infowindow = new google.maps.InfoWindow({
     //word from the post
