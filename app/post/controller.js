@@ -22,3 +22,8 @@ module.exports.show = function (req, res) {
     res.render('post/show', {post: post});
   });
 };
+
+module.exports.parse = function (req, res, next) {
+  req.body.content = Post.parse(req.body.text);
+  next();
+};
