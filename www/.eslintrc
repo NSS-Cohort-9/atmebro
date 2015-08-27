@@ -1,0 +1,18 @@
+---
+env:
+  es6: true
+  jquery: true
+  browser: true
+
+extends: eslint:recommended
+
+rules:
+  eol-last: 2
+  indent: [2, 2]
+  no-multiple-empty-lines: 2
+  no-trailing-spaces: 2
+  quotes: [2, single, avoid-escape]
+  semi: [2, always]
+  space-before-function-paren: [2, {"anonymous": "always", "named": "never"}]
+  strict: [2, "function"]
+...
