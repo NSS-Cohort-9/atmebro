@@ -6,7 +6,7 @@ var express = require('express');
 var mongo     = require('../../lib/mongo/');
 var ObjectID = require('mongodb').ObjectID;
 var nodemailer = require('nodemailer');
-var sinon = require('sinon');
+// var sinon = require('sinon');
 
 var transporter = nodemailer.createTransport({
   service: 'Gmail',

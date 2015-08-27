@@ -2,7 +2,6 @@
 
 var nodemailer = require('nodemailer');
 var expect    = require('chai').expect;
-var should    = require('chai').should();
 var mention = require('./mentions')
 var sinon = require('sinon');
 
