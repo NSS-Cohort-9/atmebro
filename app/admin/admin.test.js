@@ -9,7 +9,7 @@ describe('User', function () {
 
 	before(function (done) {
 		mongo.connect(function () {
-			var user = {_id: 'foo', admin_status: false};
+			var user = {_id: 'foo', admin_status: true};
 
 			User.collection.insertOne(user, done);
 		});
