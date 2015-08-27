@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 
 var ctrl = require('./controller');
-var geo = require('../geolocation/geolocation')
+var geo = require('../geolocation/geolocation');
 
 router.get('/', ctrl.index);
 router.post('/post', geo.submitLoc, ctrl.create);

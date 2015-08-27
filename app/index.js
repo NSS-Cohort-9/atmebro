@@ -11,7 +11,6 @@ var session = require('express-session');
 var config = require('../config/secrets');
 var routes = require('./routes');
 var database = require('../lib/mongo/');
-var bodyParser = require('body-parser');
 
 var app = module.exports = express();
 
