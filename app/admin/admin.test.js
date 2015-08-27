@@ -9,7 +9,7 @@ describe('User', function () {
 
 	before(function (done) {
 		mongo.connect(function () {
-			var user = {_id: 'foo', admin_status: true};
+			var user = {_id: 'foo', admin_status: true, toggled_admin_status: false};
 
 			User.collection.insertOne(user, done);
 		});
@@ -20,7 +20,7 @@ describe('User', function () {
 	describe('.toggleAdminStatus()', function () {
 		User.findByUserName('foo', function (err, user) {
 	        if (err) { throw err; }
-	        expect(user.admin_status).to.eql('{admin_status: true}');
+	        expect(user.admin_status).to.eql('{toggled_admin_status: false}');
 	        done();
 	  	});
 	});
