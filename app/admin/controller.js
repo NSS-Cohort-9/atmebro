@@ -5,3 +5,10 @@ module.exports.adminToggle = function (req, res) {
   User.toggleAdminStatus(user_id);
   res.redirect('/users');
 };
+
+module.exports.showUsers = function (req, res) {
+  User.findAll(function (err, users) {
+    if (err) { throw err; }
+    res.render('admin/index', {users: users});
+  });
+};
