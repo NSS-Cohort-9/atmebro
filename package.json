@@ -24,6 +24,7 @@
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
+    "geocoder": "^0.2.2",
     "jade": "^1.11.0",
     "lodash": "^3.10.1",
     "md5": "^2.0.0",
