@@ -18,7 +18,7 @@ describe('User Routes', function () {
   describe('GET /profile', function () {
     it('should redirect to /', function (done) {
       request(app)
-        .get('/profile')
+        .get('/:id/profile')
         .expect(302)
         .expect('Moved Temporarily. Redirecting to /', done);
     });

@@ -1,6 +1,16 @@
 'use strict';
 
 var Followers = require('./Followers');
+var mongo = require('../../lib/mongo/');
+var User = require('./User');
+
+// if (!res.locals.user) {
+//   var localUser = ['Drake', 'Lazer']
+// } else {
+//   var local = res.locals.user
+//   var localUser = [local, local]
+//   console.log(res.locals.user)
+// }
 
 module.exports.getFollowers = function (req, res) {
   Followers.allFollowers(req.params.id, function (err, followers) {
@@ -16,14 +26,15 @@ module.exports.getFollowing = function (req, res) {
   });
 };
 
+
 module.exports.follow = function (req, res) {
-  Followers.findOrCreate(req.params.id, function (err, follow) {
+  Followers.findOrCreate(req.params.id, User._id, function (err, follow) {
     res.render('user/profile', {follow: follow});
   });
 };
 
 module.exports.unfollow = function (req, res) {
-  Followers.destroy(req.params.id, function (err, unfollow) {
+  Followers.destroy(req.params.id, User._id, function (err, unfollow) {
     res.render('user/profile', {unfollow: unfollow});
   });
 };

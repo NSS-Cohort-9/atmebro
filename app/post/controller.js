@@ -21,3 +21,15 @@ module.exports.show = function (req, res) {
     res.render('post/show', {post: post});
   });
 };
+
+module.exports.follow = function (req, res) {
+  Followers.findOrCreate(req.params.id, User._id, function (err, follow) {
+    res.render('user/profile', {follow: follow});
+  });
+};
+
+module.exports.unfollow = function (req, res) {
+  Followers.destroy(req.params.id, User._id, function (err, unfollow) {
+    res.render('user/profile', {unfollow: unfollow});
+  });
+};

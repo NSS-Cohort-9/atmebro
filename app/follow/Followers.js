@@ -29,6 +29,7 @@ Followers.findOrCreate = function (followingId, userId, cb) {
 }
 
 
+
 Followers.create = function (followingId, userId, cb) {
   Followers.collection.insertOne({'followingId': followingId, 'userId': userId}, function (err, result) {
     cb(err, result);

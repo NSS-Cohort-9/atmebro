@@ -15,7 +15,7 @@ router.get('/:id/following', ctrl.getFollowing)
 router.post('/:id/follow', ctrl.follow)
 
 // unfollow a user
-router.delete('/:id/follow', ctrl.unfollow) 
+router.delete('/:id/unfollow', ctrl.unfollow) 
 
 
 module.exports = router;

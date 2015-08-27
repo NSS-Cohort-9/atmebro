@@ -73,7 +73,7 @@ describe('Followers', function () {
       });
     });
 
-    it('should find unique followers', function (done) {
+    it('should find all followers', function (done) {
       var Jones = seededUsers[0].handle 
 
       Followers.allFollowers(Jones, function (err, result) {

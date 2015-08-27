@@ -46,6 +46,12 @@ User.findByUserName = function (username, cb) {
   });
 };
 
+User.findAllUsers = function (cb) {
+  User.collection.find().toArray(function (err, users) {
+    cb(err, setPrototype(users));
+  })
+}
+
 User.dropCollection = function (cb) {
   User.collection.drop(cb);
 };

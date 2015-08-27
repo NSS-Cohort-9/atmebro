@@ -5,11 +5,13 @@ var router = express.Router();
 
 var ctrl = require('./controller');
 
+
 router.get('/auth/twitter', ctrl.authTwitter);
 router.get('/auth/twitter/cb', ctrl.authTwitterCb);
 
 router.get('/logout', ctrl.logout);
-router.get('/profile/', isLoggedIn, ctrl.show);
+
+router.get('/:id/profile', isLoggedIn, ctrl.show);
 
 module.exports = router;
 
