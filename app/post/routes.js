@@ -9,5 +9,6 @@ var geo = require('../geolocation/geolocation')
 router.get('/', ctrl.index);
 router.post('/post', geo.submitLoc, ctrl.create);
 router.get('/post/:id', ctrl.show);
+router.delete('/post/:id', ctrl.delete);
 
 module.exports = router;
