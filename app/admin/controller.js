@@ -1,8 +1,7 @@
-'use strict';
-
-var User = require('../user/User');
+var User = require('./admin');
 
 module.exports.adminToggle = function (req, res) {
-  User.toggleAdminStatus(User.adminStatus);
+  var user_id = req.params.id;
+  User.toggleAdminStatus(user_id);
   res.redirect('/users');
 };

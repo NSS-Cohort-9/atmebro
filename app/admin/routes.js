@@ -6,6 +6,6 @@ var router = express.Router();
 var ctrl = require('./controller');
 
 router.get('/users', ctrl.showUsers);
-router.get('/users/:id', ctrl.showUserById);
+router.get('/users/:id', ctrl.adminToggle);
 
 module.exports = router;
