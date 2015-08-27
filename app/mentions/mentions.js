@@ -1,12 +1,11 @@
 'use strict';
 
 var express = require('express');
-//var router  = require('router');
-//var path    = require('path');
 var mongo     = require('../../lib/mongo/');
 var ObjectID = require('mongodb').ObjectID;
 var nodemailer = require('nodemailer');
-// var sinon = require('sinon');
+
+// Send Grid
 
 var transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -23,30 +22,8 @@ var mailOptions = {
   text    : 'hello world!'
 }
 
-var _ 			= require('lodash');
+var _       = require('lodash');
 
-function Post(p) {
-	this.username = p.username;
-}
-
-Object.defineProperty(Post, 'collection', {
-	get: function () {
-		return mongo.getDb().collection('posts');
-	}
-});
-
-Post.dropCollection = function (cb) {
-  Post.collection.drop(cb);
-};
-
-Post.findById = function (id, cb) {
-	Post.collection.findOne({_id: ObjectID(id)}, function (err, post) {
-		cb(err, setPrototype(post));
-
-	});
-};
-
-///////////////////// NODEMAILER FUNCTIONS ////////////////////////
 
 transporter.sendMail(mailOptions, function(err, info) {
   if(err) {
@@ -59,8 +36,3 @@ transporter.sendMail(mailOptions, function(err, info) {
   }
 });
 
-module.exports 		= Post;
-
-function setPrototype(pojo) {
-  return _.create(Post.prototype, pojo);
-}
