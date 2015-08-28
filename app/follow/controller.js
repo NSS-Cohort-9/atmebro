@@ -4,14 +4,6 @@ var Followers = require('./Followers');
 var mongo = require('../../lib/mongo/');
 var User = require('./User');
 
-// if (!res.locals.user) {
-//   var localUser = ['Drake', 'Lazer']
-// } else {
-//   var local = res.locals.user
-//   var localUser = [local, local]
-//   console.log(res.locals.user)
-// }
-
 module.exports.getFollowers = function (req, res) {
   Followers.allFollowers(req.params.id, function (err, followers) {
     if (err) { throw err; }

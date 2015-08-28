@@ -17,7 +17,6 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-
 passport.use(new TwitterStrategy({
   consumerKey: secrets.twitterAuth.consumerKey,
   consumerSecret: secrets.twitterAuth.consumerSecret,

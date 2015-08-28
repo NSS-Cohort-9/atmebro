@@ -15,7 +15,7 @@ describe('Followers', function () {
         {handle: 'Jones'},
         {handle: 'Matt'}
       ];
-//why do these have to go in this order
+
       User.collection.insertMany(seededUsers, function (err, result) {
         var seededUsers = result.ops; // why are you returning result
       });
@@ -24,8 +24,6 @@ describe('Followers', function () {
         followingId: 'Jones', 
         userId: 'Matt'
       };
-
-      // db.find({for: 'sscotth'})
       
       Followers.collection.insertOne(seededFollow, function (err, result) {
         seededFollow = result.ops;
@@ -40,55 +38,69 @@ describe('Followers', function () {
     done();
   });
 
-
-
-  describe('follow actions', function () {
+  describe('Follow() and unFollow()', function () {
     this.timeout(10000);
-    it('should create a new follow object', function (done) {
-      var Jones = seededUsers[0].handle // why are you declaring these variables here
-      var Matt = seededUsers[1].handle
+    it('should delete a follow object given two handle ids', function (done) {
+      var Jones = seededUsers[0].handle; 
+      var Matt = seededUsers[1].handle;
 
-      Followers.count(function(err, originalCount) { // originally started with scenarios, then simplified
+      Followers.count(function (err, originalCount) { 
         expect(originalCount).to.equal(1); 
-          Followers.create(Matt, Jones, function() { // why are we creating just an object - where you started from (relational data)
-            Followers.count(function(err, newCount) {
-              expect(newCount).to.equal(2)
+          Followers.destroy(Jones, Matt, function () { 
+            Followers.count(function (err, newCount) {
+              expect(newCount).to.equal(0);
               done();
+            });
           });
-        });
-      });
-    });
-    it('should delete the correct follow object on unfollow()', function (done) {
-      var Jones = seededUsers[0].handle 
-      var Matt = seededUsers[1].handle
-
-      Followers.count(function(err, originalCount) { // show how to abstract this into
-        expect(originalCount).to.equal(2); 
-          Followers.destroy(Matt, Jones, function() { 
-            Followers.count(function(err, newCount) {
-              expect(newCount).to.equal(1)
-              done();
-          });
-        });
       });
     });
 
-    it('should find all followers', function (done) {
-      var Jones = seededUsers[0].handle 
+    it('should create a new follow object given two handles', function (done) {
+      var Jones = seededUsers[0].handle; 
+      var Matt = seededUsers[1].handle;
+
+      Followers.count(function (err, originalCount) { 
+        expect(originalCount).to.equal(0);
+          Followers.create(Jones, Matt, function () { 
+            Followers.count(function (err, newCount) {
+              expect(newCount).to.equal(1);
+              done();
+            });
+          });
+      });
+    });
+
+    it('should not create a new follow object given an individual is already followed', function (done) {
+      var Jones = seededUsers[0].handle;
+      var Matt = seededUsers[1].handle;
+
+      Followers.count(function (err, originalCount) { 
+        expect(originalCount).to.equal(1);
+          Followers.findOrCreate(Jones, Matt, function () { 
+            Followers.count(function (err, newCount) {
+              expect(newCount).to.equal(1);
+              done();
+            });
+          });
+      });
+    });
+
+    it('should find all followers given an id', function (done) {
+      var Jones = seededUsers[0].handle; 
 
       Followers.allFollowers(Jones, function (err, result) {
-        expect(result[0].userId).to.equal(seededFollow[0].userId)
+        expect(result[0].userId).to.equal('Matt');
         done();
-      })
+      });
     });
    
     it('should find who a user is following', function (done) {
-      var Matt = seededUsers[1].handle
+      var Matt = seededUsers[1].handle;
 
       Followers.allFollowing(Matt, function (err, result) {
-        expect(result[0].followingId).to.equal(seededFollow[0].followingId)
+        expect(result[0].followingId).to.equal(seededFollow[0].followingId);
         done();
-      })
+      });
     });
 
 

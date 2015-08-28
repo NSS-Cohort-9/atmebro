@@ -1,13 +1,25 @@
 extends ../templates/layout
 
 block content
-  form(action='/post', method='POST')
-    input(name='text')
-    input(type='submit')
+	form(action='/post', method='POST')
+		input(name='text')
+		input(type='submit')
 
-  ul
-    each user in users
-      li
-        a(href=user._id+'/profile/')= user._id
-        button(type='button', action=user._id+'/unfollow', method="DELETE") Unfollow
-        button(type='button', action=user._id+'/follow') Follow
+
+h4 #{user._id} Followers
+ul
+	each followers in followers
+		li
+			a(href=user._id+'/profile/')=user._id
+			button(type='button', action=user._id+'/unfollow', method="DELETE") Unfollow
+			button(type='button', action=user._id+'/follow') Follow
+
+
+h4 #{user._id} Following
+ul
+	each follower in following
+		li
+			a(href=user._id+'/profile/')=user._id
+			button(type='button', action=user._id+'/unfollow', method="DELETE") Unfollow
+			button(type='button', action=user._id+'/follow') Follow
+

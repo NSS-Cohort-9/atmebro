@@ -11,7 +11,9 @@ router.get('/auth/twitter/cb', ctrl.authTwitterCb);
 
 router.get('/logout', ctrl.logout);
 
-router.get('/:id/profile', isLoggedIn, ctrl.show);
+router.get('/landing', ctrl.show);
+
+router.get('/:id/profile', isLoggedIn, ctrl.show); // have to be logged in to view profiles
 
 module.exports = router;
 
