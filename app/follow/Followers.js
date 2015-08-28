@@ -57,12 +57,9 @@ Followers.count = function (cb) {
   return Followers.collection.count(cb);
 };
 
-
-
 Followers.dropCollection = function (cb) {
   Followers.collection.drop(cb);
 };
-
 
 module.exports = Followers;
 
