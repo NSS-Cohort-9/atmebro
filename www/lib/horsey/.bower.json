@@ -1,0 +1,20 @@
+{
+  "name": "horsey",
+  "version": "2.6.1",
+  "description": "Progressive and customizable autocomplete component",
+  "main": "dist/horsey.js",
+  "homepage": "https://github.com/bevacqua/horsey",
+  "authors": [
+    "Nicolas Bevacqua <nicolasbevacqua@gmail.com>"
+  ],
+  "license": "MIT",
+  "_release": "2.6.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.6.1",
+    "commit": "1cf213a494bcc05d78fc50a556202d3f74d89d31"
+  },
+  "_source": "git://github.com/bevacqua/horsey.git",
+  "_target": "~2.6.1",
+  "_originalSource": "horsey"
+}

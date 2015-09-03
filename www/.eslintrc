@@ -1,0 +1,8 @@
+{
+  "files": [
+    "app/*.js"
+  ],
+  "tests": [
+    "app/*.test.js"
+  ]
+}

@@ -4,6 +4,10 @@ var expect = require('chai').expect;
 var Post = require('./Post');
 var mongo = require('../../lib/mongo/');
 
+before(mongo.connect);
+
+// after(Post.dropCollection);
+
 describe('Post', function () {
   var seededPosts;
 
