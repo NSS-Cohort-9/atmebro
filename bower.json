@@ -1,0 +1,20 @@
+{
+  "name": "atmebro",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/NSS-Cohort-9/atmebro",
+  "authors": [
+    "Scott Humphries <scott@sscotth.io>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.5"
+  }
+}
